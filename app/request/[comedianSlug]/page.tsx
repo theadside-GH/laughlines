@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, CreditCard, FileText, LockKeyhole, Video } from "lucide-react";
+import { ArrowLeft, FileText, LockKeyhole, Video } from "lucide-react";
+import { CheckoutButton } from "@/components/CheckoutButton";
+import { PageTitle } from "@/components/PageTitle";
 import { BRAND, OCCASIONS, SERVICE_COPY } from "@/lib/constants";
-import { findComedian } from "@/lib/data";
+import { comedians, findComedian } from "@/lib/data";
 import { calculatePrice, money } from "@/lib/pricing";
 
 export function generateStaticParams() {
-  return ["maya-ross", "dev-santos", "lena-bright"].map((comedianSlug) => ({
-    comedianSlug
-  }));
+  return comedians.map((comic) => ({ comedianSlug: comic.slug }));
 }
 
 export default async function RequestPage({
@@ -38,10 +38,10 @@ export default async function RequestPage({
       </Link>
 
       <div style={{ marginTop: 28 }}>
-        <span className="eyebrow">Request brief</span>
-        <h1>Give {comedian.name.split(" ")[0]} the useful details.</h1>
+        <PageTitle>Request {comedian.name.split(" ")[0]}</PageTitle>
         <p className="section-intro dark">
-          This form becomes the order brief. After checkout, the comic has{" "}
+          Give {comedian.name.split(" ")[0]} the useful details — this becomes
+          the order brief. After checkout, the comic has{" "}
           {BRAND.acceptWindowHours} hours to accept or decline.
         </p>
       </div>
@@ -142,10 +142,7 @@ export default async function RequestPage({
             </select>
           </label>
 
-          <button className="button primary" type="button">
-            <CreditCard size={18} aria-hidden="true" />
-            Continue to Stripe Checkout
-          </button>
+          <CheckoutButton />
         </form>
 
         <aside className="panel">

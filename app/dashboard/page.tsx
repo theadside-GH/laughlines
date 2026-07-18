@@ -35,6 +35,10 @@ export default function CivilianDashboardPage() {
           Your orders, privacy controls, revision windows, and review prompts
           after completion.
         </p>
+        <p className="preview-banner">
+          Preview — the orders and figures below are sample data so you can see
+          how your dashboard works. Your real orders appear here once you book.
+        </p>
 
       <section className="dashboard-layout">
         <div className="grid">

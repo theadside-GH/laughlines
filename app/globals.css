@@ -240,6 +240,12 @@ main {
   padding: 10px 14px;
 }
 
+.checkout-note {
+  color: var(--muted);
+  font-size: 0.88rem;
+  margin: 12px 0 0;
+}
+
 .button.compact {
   min-height: 42px;
   padding-inline: 14px;
@@ -656,6 +662,40 @@ fieldset.field {
 .field textarea:focus {
   border-color: var(--coral);
   outline: none;
+}
+
+.search-field {
+  align-items: center;
+  background: #12100e;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--muted);
+  display: flex;
+  gap: 8px;
+  padding: 0 12px;
+}
+
+.search-field:focus-within {
+  border-color: var(--coral);
+}
+
+.search-field input {
+  background: none;
+  border: 0;
+  color: var(--ink);
+  min-height: 44px;
+  padding: 0;
+  width: 100%;
+}
+
+.search-field input:focus {
+  outline: none;
+}
+
+.results-count {
+  color: var(--muted);
+  font-weight: 800;
+  margin: 26px 0 16px;
 }
 
 .field textarea {
@@ -1236,6 +1276,18 @@ fieldset.field {
 
 .signed-in-as strong {
   color: var(--ink);
+}
+
+/* Sample-data preview banner on dashboards. */
+.preview-banner {
+  background: rgba(255, 209, 102, 0.1);
+  border: 1px solid rgba(255, 209, 102, 0.35);
+  border-radius: 10px;
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-weight: 650;
+  margin: 4px 0 26px;
+  padding: 12px 16px;
 }
 
 /* The red page title links home. */

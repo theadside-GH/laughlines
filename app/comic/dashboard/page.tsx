@@ -43,6 +43,11 @@ export default function ComicDashboardPage() {
           Accept gigs, deliver the funny, and control pricing, availability, and
           payouts after admin approval.
         </p>
+        <p className="preview-banner">
+          Preview — the requests and payout figures below are sample data so you
+          can see how the portal works. Your real gigs appear here once you're
+          approved and booked.
+        </p>
 
       <section className="dashboard-layout">
         <div className="grid">
