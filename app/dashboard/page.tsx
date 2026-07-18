@@ -37,12 +37,6 @@ export default function CivilianDashboardPage() {
         </p>
 
       <section className="dashboard-layout">
-        <nav className="side-nav" aria-label="Civilian dashboard sections">
-          <span className="active">Orders</span>
-          <span>Profile privacy</span>
-          <span>Reviews</span>
-          <span>Receipts</span>
-        </nav>
         <div className="grid">
           <div className="grid three">
             <article className="metric-card">

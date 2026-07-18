@@ -692,6 +692,16 @@ fieldset.field {
   padding: 20px;
 }
 
+/* Headings inside cards/dashboards must not use the giant marketing h2 scale. */
+.panel h2,
+.dashboard-layout h2,
+.order-card h2,
+.metric-card h2 {
+  font-size: 1.3rem;
+  line-height: 1.25;
+  margin-bottom: 10px;
+}
+
 .status-pill {
   background: rgba(179, 155, 255, 0.16);
   border-radius: 999px;
@@ -706,7 +716,7 @@ fieldset.field {
 .dashboard-layout {
   display: grid;
   gap: 24px;
-  grid-template-columns: 280px minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .side-nav {

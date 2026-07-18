@@ -56,14 +56,6 @@ export default function AdminPage() {
       </section>
 
       <section className="dashboard-layout" style={{ marginTop: 28 }}>
-        <nav className="side-nav" aria-label="Admin sections">
-          <span className="active">Queues</span>
-          <span>Comedians</span>
-          <span>Orders</span>
-          <span>Reviews</span>
-          <span>Discounts</span>
-          <span>Payout ledger</span>
-        </nav>
         <div className="grid">
           <section className="grid two">
             {adminQueues.map((item) => {

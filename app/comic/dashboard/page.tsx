@@ -45,13 +45,6 @@ export default function ComicDashboardPage() {
         </p>
 
       <section className="dashboard-layout">
-        <nav className="side-nav" aria-label="Comic dashboard sections">
-          <span className="active">Requests</span>
-          <span>Deliveries</span>
-          <span>Pricing</span>
-          <span>Profile</span>
-          <span>Payouts</span>
-        </nav>
         <div className="grid">
           <div className="grid three">
             <article className="metric-card">
