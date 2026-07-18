@@ -224,6 +224,22 @@ main {
   color: #1a1206;
 }
 
+.button:disabled {
+  cursor: default;
+  filter: none;
+  opacity: 0.6;
+}
+
+.form-error {
+  background: rgba(255, 107, 87, 0.12);
+  border: 1px solid rgba(255, 107, 87, 0.4);
+  border-radius: 8px;
+  color: #ff8a79;
+  font-weight: 650;
+  margin: 0;
+  padding: 10px 14px;
+}
+
 .button.compact {
   min-height: 42px;
   padding-inline: 14px;
