@@ -1192,6 +1192,42 @@ fieldset.field {
   flex-direction: column;
 }
 
+/* Sign-out styled as a nav link. */
+.nav-signout {
+  background: none;
+  border: 0;
+  color: var(--muted);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.94rem;
+  font-weight: 650;
+  padding: 0;
+  text-transform: uppercase;
+}
+
+.nav-signout:hover {
+  color: var(--ink);
+}
+
+/* Auth gate loading / redirect state. */
+.auth-loading {
+  color: var(--muted);
+  font-weight: 700;
+  padding: 96px 20px;
+  text-align: center;
+}
+
+/* "Signed in as …" line on account pages. */
+.signed-in-as {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin: 4px 0 18px;
+}
+
+.signed-in-as strong {
+  color: var(--ink);
+}
+
 /* The red page title links home. */
 a.eyebrow-home {
   cursor: pointer;

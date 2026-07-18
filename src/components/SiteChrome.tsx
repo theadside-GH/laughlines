@@ -1,13 +1,29 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { getSupabaseBrowserClient } from "@/lib/supabase";
+import {
+  accountLabelForRole,
+  roleHomePath,
+  useSupabaseUser
+} from "@/lib/useSupabaseUser";
 
 // The landing page ("/") is a full-screen immersive door, so we hide the
 // standard header/footer there. Every other page gets the simple chrome.
 export function SiteHeader() {
   const pathname = usePathname();
+  const router = useRouter();
+  const { user, role, configured } = useSupabaseUser();
+
   if (pathname === "/") return null;
+
+  async function handleSignOut() {
+    if (configured) {
+      await getSupabaseBrowserClient().auth.signOut();
+    }
+    router.push("/");
+  }
 
   return (
     <header className="site-header">
@@ -24,7 +40,20 @@ export function SiteHeader() {
         <nav aria-label="Main navigation">
           <Link href="/comedians">Comedians</Link>
           <Link href="/top-20">Top 20</Link>
-          <Link href="/join">Join</Link>
+          {user ? (
+            <>
+              <Link href={roleHomePath(role)}>{accountLabelForRole(role)}</Link>
+              <button
+                type="button"
+                className="nav-signout"
+                onClick={handleSignOut}
+              >
+                Sign out
+              </button>
+            </>
+          ) : (
+            <Link href="/join">Join</Link>
+          )}
         </nav>
       </div>
     </header>

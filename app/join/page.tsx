@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { LogIn, Mic2, UserPlus } from "lucide-react";
 import { PageTitle } from "@/components/PageTitle";
 import { getSupabaseBrowserClient, isSupabaseConfigured } from "@/lib/supabase";
+import { roleHomePath, useSupabaseUser } from "@/lib/useSupabaseUser";
 
 type Tab = "signin" | "user" | "comic";
 
@@ -14,6 +16,9 @@ const tabs: Array<{ id: Tab; label: string; icon: typeof LogIn }> = [
 ];
 
 export default function JoinPage() {
+  const router = useRouter();
+  const { user, role } = useSupabaseUser();
+
   const [tab, setTab] = useState<Tab>("signin");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -23,6 +28,11 @@ export default function JoinPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
+
+  // Already signed in? Send them straight to their dashboard.
+  useEffect(() => {
+    if (user) router.replace(roleHomePath(role));
+  }, [user, role, router]);
 
   function switchTab(id: Tab) {
     setTab(id);
@@ -47,20 +57,22 @@ export default function JoinPage() {
       const supabase = getSupabaseBrowserClient();
 
       if (tab === "signin") {
-        const { error } = await supabase.auth.signInWithPassword({
+        const { data, error } = await supabase.auth.signInWithPassword({
           email,
           password
         });
         if (error) throw error;
-        setMessage("You're signed in.");
+        router.replace(
+          roleHomePath(data.user?.user_metadata?.role as string | undefined)
+        );
       } else {
-        const role = tab === "comic" ? "comedian" : "civilian";
+        const signupRole = tab === "comic" ? "comedian" : "civilian";
         const { data, error } = await supabase.auth.signUp({
           email,
           password,
           options: {
             data: {
-              role,
+              role: signupRole,
               display_name: name || undefined,
               social_link: link || undefined
             }
@@ -68,12 +80,15 @@ export default function JoinPage() {
         });
         if (error) throw error;
 
-        // With email confirmation on, there's no session yet.
-        setMessage(
-          data.session
-            ? "Account created — you're signed in."
-            : "Account created! Check your email to confirm your address."
-        );
+        if (data.session) {
+          // Email confirmation off — signed in immediately.
+          router.replace(roleHomePath(signupRole));
+        } else {
+          // Email confirmation on — no session until they confirm.
+          setMessage(
+            "Account created! Check your email to confirm your address, then sign in."
+          );
+        }
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong.");

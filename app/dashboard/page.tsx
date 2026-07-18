@@ -1,5 +1,8 @@
 import Link from "next/link";
 import { CheckCircle2, Eye, EyeOff, MessageSquareText, Star } from "lucide-react";
+import { AuthGuard } from "@/components/AuthGuard";
+import { PageTitle } from "@/components/PageTitle";
+import { SignedInAs } from "@/components/SignedInAs";
 
 const civilianOrders = [
   {
@@ -24,13 +27,14 @@ const civilianOrders = [
 
 export default function CivilianDashboardPage() {
   return (
-    <main className="page-shell">
-      <span className="eyebrow">Civilian dashboard</span>
-      <h1>Your comedy orders.</h1>
-      <p className="section-intro dark">
-        Verified by email, with privacy controls, order threads, revision windows,
-        and review prompts after completion.
-      </p>
+    <AuthGuard role="civilian">
+      <main className="page-shell">
+        <PageTitle>My Orders</PageTitle>
+        <SignedInAs />
+        <p className="section-intro dark">
+          Your orders, privacy controls, revision windows, and review prompts
+          after completion.
+        </p>
 
       <section className="dashboard-layout">
         <nav className="side-nav" aria-label="Civilian dashboard sections">
@@ -122,6 +126,7 @@ export default function CivilianDashboardPage() {
           </section>
         </div>
       </section>
-    </main>
+      </main>
+    </AuthGuard>
   );
 }

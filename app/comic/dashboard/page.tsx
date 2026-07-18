@@ -1,4 +1,7 @@
 import { BadgeDollarSign, Clock3, FileVideo, Inbox, Send, Settings } from "lucide-react";
+import { AuthGuard } from "@/components/AuthGuard";
+import { PageTitle } from "@/components/PageTitle";
+import { SignedInAs } from "@/components/SignedInAs";
 
 const comicJobs = [
   {
@@ -32,13 +35,14 @@ const comicJobs = [
 
 export default function ComicDashboardPage() {
   return (
-    <main className="page-shell">
-      <span className="eyebrow">Comic portal</span>
-      <h1>Accept the gig. Deliver the funny.</h1>
-      <p className="section-intro dark">
-        Comedians control pricing, rush fees, availability, profile content, and
-        Stripe Connect payout setup after admin approval.
-      </p>
+    <AuthGuard role="comedian">
+      <main className="page-shell">
+        <PageTitle>Comic Portal</PageTitle>
+        <SignedInAs />
+        <p className="section-intro dark">
+          Accept gigs, deliver the funny, and control pricing, availability, and
+          payouts after admin approval.
+        </p>
 
       <section className="dashboard-layout">
         <nav className="side-nav" aria-label="Comic dashboard sections">
@@ -137,6 +141,7 @@ export default function ComicDashboardPage() {
           </section>
         </div>
       </section>
-    </main>
+      </main>
+    </AuthGuard>
   );
 }
