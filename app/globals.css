@@ -1105,6 +1105,10 @@ fieldset.field {
   font-size: 1.02rem;
 }
 
+.rank-row:hover .rank-info strong {
+  color: var(--coral);
+}
+
 .rank-info .muted {
   font-size: 0.85rem;
   overflow: hidden;

@@ -2,11 +2,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, ExternalLink, Play, Star } from "lucide-react";
 import { SERVICE_COPY } from "@/lib/constants";
-import { findComedian } from "@/lib/data";
+import { comedians, findComedian } from "@/lib/data";
 import { money } from "@/lib/pricing";
 
 export function generateStaticParams() {
-  return ["maya-ross", "dev-santos", "lena-bright"].map((slug) => ({ slug }));
+  return comedians.map((comic) => ({ slug: comic.slug }));
 }
 
 export default async function ComedianProfilePage({

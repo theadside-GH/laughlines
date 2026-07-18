@@ -38,6 +38,11 @@ export type ComedianProfile = {
   reviewCount: number;
   completedOrders: number;
   responseTime: string;
+  // Style descriptor + weekly leaderboard metrics (drive Top 20 / Fastest).
+  style: string;
+  weeklyOrders: number;
+  avgTurnaroundHours: number;
+  onTimeRate: number;
   categories: string[];
   credits: string[];
   bio: string;

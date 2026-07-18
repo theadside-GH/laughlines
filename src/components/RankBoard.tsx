@@ -40,12 +40,12 @@ export function RankBoard({
           >
             {initials(comic.name)}
           </span>
-          <span className="rank-info">
+          <Link className="rank-info" href={`/comedians/${comic.slug}`}>
             <strong>{comic.name}</strong>
             <span className="muted">
               {comic.style} · {comic.location}
             </span>
-          </span>
+          </Link>
           <span className="rank-metric">
             {metric === "orders" ? (
               <>
@@ -59,8 +59,11 @@ export function RankBoard({
               </>
             )}
           </span>
-          <Link className="button secondary compact rank-cta" href="/comedians">
-            Book
+          <Link
+            className="button secondary compact rank-cta"
+            href={`/comedians/${comic.slug}`}
+          >
+            View
           </Link>
         </li>
       ))}
