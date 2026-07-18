@@ -1,15 +1,18 @@
 :root {
-  --ink: #171313;
-  --muted: #655f5a;
-  --paper: #fffaf2;
-  --panel: #ffffff;
-  --line: #e9ded3;
+  color-scheme: dark;
+  --ink: #f6f1ea; /* primary text (light) */
+  --muted: #a9a099; /* warm muted gray */
+  --paper: #0b0908; /* page background */
+  --panel: #16110e; /* card / surface */
+  --panel-2: #201814; /* nested surface (price boxes, badges) */
+  --line: rgba(255, 255, 255, 0.1);
   --coral: #ff6b57;
+  --coral-ink: #1a0d0a; /* text on coral */
   --yellow: #ffd166;
   --mint: #5ee0b5;
-  --blue: #3c6df0;
-  --violet: #6f4adf;
-  --shadow: 0 18px 60px rgba(39, 27, 14, 0.12);
+  --blue: #7ea0ff;
+  --violet: #b39bff;
+  --shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
 * {
@@ -22,8 +25,18 @@ html {
 
 body {
   margin: 0;
-  background: var(--paper);
+  background:
+    radial-gradient(
+      900px circle at 50% -8%,
+      rgba(255, 107, 87, 0.12),
+      transparent 52%
+    ),
+    radial-gradient(1200px circle at 50% -12%, #1c1512 0%, var(--paper) 60%);
+  background-attachment: fixed;
   color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   font-family:
     Inter,
     ui-sans-serif,
@@ -39,6 +52,20 @@ a {
   text-decoration: none;
 }
 
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--coral);
+  outline-offset: 2px;
+}
+
+::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
+
 button,
 input,
 select,
@@ -51,20 +78,30 @@ img {
   max-width: 100%;
 }
 
+/* Keep the footer pinned to the bottom on short pages. */
+main {
+  flex: 1 0 auto;
+}
+
 .site-header {
-  align-items: center;
   backdrop-filter: blur(20px);
-  background: rgba(255, 250, 242, 0.86);
-  border-bottom: 1px solid rgba(233, 222, 211, 0.8);
-  display: flex;
-  gap: 24px;
-  justify-content: space-between;
+  background: rgba(11, 9, 8, 0.72);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   left: 0;
-  min-height: 72px;
-  padding: 14px clamp(18px, 4vw, 56px);
   position: sticky;
   top: 0;
   z-index: 20;
+}
+
+.header-inner {
+  align-items: center;
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 1180px;
+  min-height: 72px;
+  padding: 14px clamp(18px, 4vw, 56px);
 }
 
 .brand-mark {
@@ -88,9 +125,9 @@ img {
 
 .icon-button {
   align-items: center;
-  background: var(--ink);
-  border: 1px solid var(--ink);
-  color: white;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line);
+  color: var(--ink);
   display: inline-flex;
   height: 42px;
   justify-content: center;
@@ -103,10 +140,19 @@ img {
 }
 
 .brand-logo {
-  border-radius: 8px;
-  height: 58px;
-  object-fit: contain;
-  width: 58px;
+  border-radius: 11px;
+  box-shadow: 0 0 22px rgba(255, 107, 87, 0.28);
+  display: block;
+  height: 48px;
+  overflow: hidden;
+  width: 48px;
+}
+
+.brand-logo img {
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.28);
+  width: 100%;
 }
 
 .site-header nav {
@@ -138,7 +184,7 @@ img {
 
 .button {
   align-items: center;
-  border: 1px solid var(--ink);
+  border: 1px solid transparent;
   border-radius: 8px;
   cursor: pointer;
   display: inline-flex;
@@ -148,21 +194,34 @@ img {
   min-height: 46px;
   padding: 0 18px;
   text-transform: uppercase;
+  transition:
+    transform 0.15s,
+    filter 0.15s,
+    background 0.15s;
 }
 
 .button.primary {
-  background: var(--ink);
-  color: white;
+  background: var(--coral);
+  color: var(--coral-ink);
+}
+
+.button.primary:hover {
+  filter: brightness(1.08);
 }
 
 .button.secondary {
-  background: white;
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--line);
   color: var(--ink);
+}
+
+.button.secondary:hover {
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .button.accent {
   background: var(--yellow);
-  color: var(--ink);
+  color: #1a1206;
 }
 
 .button.compact {
@@ -301,7 +360,7 @@ h3 {
 }
 
 .section.alt {
-  background: white;
+  background: var(--panel);
 }
 
 .section-header {
@@ -363,7 +422,7 @@ h3 {
 
 .badge {
   align-items: center;
-  background: #f6efe7;
+  background: var(--panel-2);
   border: 1px solid var(--line);
   border-radius: 999px;
   color: var(--muted);
@@ -420,7 +479,7 @@ h3 {
 }
 
 .price-row div {
-  background: #fbf5ee;
+  background: var(--panel-2);
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 12px;
@@ -552,6 +611,13 @@ h3 {
   gap: 8px;
 }
 
+fieldset.field {
+  border: 0;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+}
+
 .field label {
   font-size: 0.88rem;
   font-weight: 850;
@@ -560,13 +626,20 @@ h3 {
 .field input,
 .field select,
 .field textarea {
-  background: white;
+  background: #12100e;
   border: 1px solid var(--line);
   border-radius: 8px;
   color: var(--ink);
   min-height: 46px;
   padding: 12px 14px;
   width: 100%;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--coral);
+  outline: none;
 }
 
 .field textarea {
@@ -604,7 +677,7 @@ h3 {
 }
 
 .status-pill {
-  background: #efe8ff;
+  background: rgba(179, 155, 255, 0.16);
   border-radius: 999px;
   color: var(--violet);
   display: inline-flex;
@@ -630,7 +703,7 @@ h3 {
 
 .side-nav a,
 .side-nav span {
-  background: white;
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--line);
   border-radius: 8px;
   color: var(--muted);
@@ -640,8 +713,9 @@ h3 {
 }
 
 .side-nav .active {
-  background: var(--ink);
-  color: white;
+  background: var(--coral);
+  border-color: var(--coral);
+  color: var(--coral-ink);
 }
 
 .timeline {
@@ -658,17 +732,27 @@ h3 {
 }
 
 .site-footer {
+  background: #090706;
+  border-top: 1px solid var(--line);
+  color: var(--ink);
+}
+
+.footer-inner {
   align-items: center;
-  background: var(--ink);
-  color: white;
   display: flex;
   justify-content: space-between;
-  padding: 28px clamp(18px, 5vw, 76px);
+  margin: 0 auto;
+  max-width: 1180px;
+  padding: 28px clamp(18px, 4vw, 56px);
 }
 
 .site-footer span,
 .footer-links a {
-  color: rgba(255, 255, 255, 0.66);
+  color: var(--muted);
+}
+
+.footer-links a:hover {
+  color: var(--ink);
 }
 
 .footer-links {
@@ -677,14 +761,673 @@ h3 {
   text-transform: uppercase;
 }
 
-@media (max-width: 920px) {
-  .site-header nav,
-  .header-actions .compact {
+/* ---------- Front door (home) ---------- */
+.home {
+  min-height: 100vh;
+}
+
+.front-door {
+  align-items: center;
+  background: radial-gradient(circle at 50% 38%, #17110f 0%, #000 72%);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+  padding: 36px 20px 44px;
+}
+
+.front-stage {
+  --mx: 50%;
+  --my: 50%;
+  aspect-ratio: 1;
+  position: relative;
+  /* Cap by viewport height too, so the square ring never gets clipped
+     top/bottom on wide-but-short windows. */
+  width: min(720px, 92vw, 80vh);
+}
+
+.front-glow {
+  background: radial-gradient(
+    260px circle at var(--mx) var(--my),
+    rgba(255, 107, 87, 0.22),
+    transparent 62%
+  );
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+}
+
+.front-badge {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  left: 50%;
+  pointer-events: none;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(46%, 320px);
+  z-index: 2;
+}
+
+.front-badge-icon {
+  aspect-ratio: 1;
+  border-radius: 24%;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+  display: block;
+  overflow: hidden;
+  width: clamp(64px, 12vw, 104px);
+}
+
+.front-badge-icon img {
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.28);
+  width: 100%;
+}
+
+.front-badge-word {
+  font-size: clamp(1.5rem, 4.4vw, 2.7rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.front-badge-word sup {
+  font-size: 0.38em;
+  top: -1em;
+}
+
+.front-badge-sub {
+  color: rgba(255, 255, 255, 0.74);
+  font-size: clamp(0.58rem, 1.4vw, 0.76rem);
+  font-weight: 700;
+  letter-spacing: 0.26em;
+}
+
+.front-badge-est {
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 0.68rem;
+  letter-spacing: 0.3em;
+}
+
+.front-ring {
+  inset: 0;
+  position: absolute;
+  z-index: 2;
+}
+
+.front-point {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  justify-content: center;
+  left: var(--x);
+  min-height: clamp(98px, 15vw, 134px);
+  padding: 10px;
+  position: absolute;
+  text-align: center;
+  top: var(--y);
+  transform: translate(-50%, -50%);
+  transition:
+    transform 0.25s,
+    box-shadow 0.25s,
+    border-color 0.25s,
+    background 0.25s;
+  width: clamp(98px, 15vw, 134px);
+}
+
+.front-point:hover,
+.front-point:focus-visible {
+  background: rgba(255, 107, 87, 0.16);
+  border-color: var(--coral);
+  box-shadow:
+    0 0 28px rgba(255, 107, 87, 0.55),
+    0 0 60px rgba(255, 107, 87, 0.25);
+  outline: none;
+  transform: translate(-50%, -50%) scale(1.1);
+  z-index: 3;
+}
+
+.front-point-num {
+  color: var(--coral);
+  font-size: clamp(1.1rem, 2.4vw, 1.5rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.front-point-text {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.front-point-label {
+  font-size: clamp(0.66rem, 1.5vw, 0.86rem);
+  font-weight: 750;
+  line-height: 1.1;
+}
+
+.front-point-desc {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.66rem;
+  line-height: 1.15;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    max-height 0.25s,
+    opacity 0.25s;
+}
+
+.front-point:hover .front-point-desc,
+.front-point:focus-visible .front-point-desc {
+  max-height: 44px;
+  opacity: 1;
+}
+
+.front-point.is-disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.front-point.is-disabled:hover {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: none;
+  transform: translate(-50%, -50%);
+}
+
+.front-hint {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.9rem;
+  margin: 0;
+  z-index: 2;
+}
+
+.on-mobile {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .front-point,
+  .front-point-desc {
+    transition: none;
+  }
+}
+
+/* ---------- Leaderboards (Top 20 / Fastest) ---------- */
+.update-note {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  margin: 12px 0 26px;
+  text-transform: uppercase;
+}
+
+/* Bulleted explainer (Custom Jokes). */
+.option-list {
+  display: grid;
+  gap: 12px;
+  list-style: none;
+  margin: 22px 0 0;
+  padding: 0;
+}
+
+.option-list li {
+  border-left: 3px solid var(--coral);
+  color: var(--muted);
+  line-height: 1.55;
+  max-width: 720px;
+  padding-left: 16px;
+}
+
+.option-list strong {
+  color: var(--ink);
+}
+
+/* FAQ. */
+.faq-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.faq-item {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: 20px 22px;
+}
+
+.faq-item h2 {
+  font-size: 1.15rem;
+  margin-bottom: 8px;
+}
+
+.faq-item p {
+  margin: 0;
+}
+
+/* Contact. */
+.contact-email {
+  align-items: center;
+  color: var(--coral);
+  display: inline-flex;
+  font-weight: 750;
+  gap: 8px;
+  margin: 0 0 18px;
+}
+
+.rank-board {
+  display: grid;
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.rank-row {
+  align-items: center;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 38px 48px minmax(0, 1fr) auto auto;
+  padding: 12px 16px;
+}
+
+.rank-number {
+  color: var(--muted);
+  font-size: 1.2rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.rank-number.top {
+  color: var(--coral);
+}
+
+.rank-avatar {
+  align-items: center;
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  font-size: 0.9rem;
+  font-weight: 800;
+  height: 46px;
+  justify-content: center;
+  width: 46px;
+}
+
+.rank-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.rank-info strong {
+  font-size: 1.02rem;
+}
+
+.rank-info .muted {
+  font-size: 0.85rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rank-metric {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+
+.rank-metric strong {
+  font-size: 1.05rem;
+}
+
+.rank-metric small {
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+.rank-cta {
+  white-space: nowrap;
+}
+
+/* ---------- Shared page bits ---------- */
+.page-shell.narrow {
+  max-width: 640px;
+}
+
+.confirm-panel {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.confirm-panel h1,
+.confirm-panel h2 {
+  margin: 0;
+}
+
+.tab-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 22px 0 18px;
+}
+
+.tab-button {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  cursor: pointer;
+  display: inline-flex;
+  font-weight: 750;
+  gap: 8px;
+  padding: 10px 16px;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    border-color 0.2s;
+}
+
+.tab-button:hover {
+  border-color: rgba(255, 107, 87, 0.5);
+  color: var(--ink);
+}
+
+.tab-button.active {
+  background: var(--coral);
+  border-color: var(--coral);
+  color: var(--coral-ink);
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+}
+
+/* The red page title links home. */
+a.eyebrow-home {
+  cursor: pointer;
+  transition: filter 0.15s;
+}
+
+a.eyebrow-home:hover {
+  filter: brightness(1.15);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Constrains form-style pages so their width matches the rest of the site. */
+.form-column {
+  max-width: 560px;
+}
+
+/* Centered sign-in / join page. */
+.join-page {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.join-page .section-intro {
+  text-align: center;
+}
+
+.join-page .form-column {
+  width: 100%;
+}
+
+.join-page .tab-row {
+  justify-content: center;
+}
+
+/* Checkbox-style service / option pickers. */
+.pick-boxes {
+  border: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+}
+
+.pick {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  font-weight: 750;
+  gap: 9px;
+  padding: 10px 16px;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+}
+
+.pick:hover {
+  border-color: rgba(255, 107, 87, 0.45);
+}
+
+.pick:has(input:checked) {
+  background: rgba(255, 107, 87, 0.14);
+  border-color: var(--coral);
+}
+
+.pick input {
+  accent-color: var(--coral);
+  height: 17px;
+  width: 17px;
+}
+
+.cta-with-picks {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 24px;
+  justify-content: space-between;
+  margin-top: 28px;
+}
+
+/* ---------- Front-page feel across the whole site ---------- */
+
+/* Brand-coral iconography, echoing the logo mark. */
+.sample-card > svg,
+.service-option > svg,
+.confirm-panel > svg,
+.metric-card > svg {
+  color: var(--coral);
+}
+
+/* The primary CTA carries the same coral glow as the ring doors. */
+.button.primary {
+  box-shadow: 0 10px 34px rgba(255, 107, 87, 0.3);
+}
+
+.button.primary:hover {
+  box-shadow: 0 12px 42px rgba(255, 107, 87, 0.45);
+}
+
+/* Eyebrow labels glow faintly, like the numbered points. */
+.eyebrow {
+  text-shadow: 0 0 22px rgba(255, 107, 87, 0.45);
+}
+
+/* Interactive cards light up and lift, just like the front-door doors. */
+.comic-card,
+.rank-row {
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.comic-card:hover,
+.rank-row:hover {
+  border-color: rgba(255, 107, 87, 0.5);
+  box-shadow:
+    0 0 0 1px rgba(255, 107, 87, 0.22),
+    0 22px 55px rgba(0, 0, 0, 0.55),
+    0 0 46px rgba(255, 107, 87, 0.14);
+  transform: translateY(-4px);
+}
+
+.rank-row {
+  cursor: default;
+}
+
+.rank-row:hover {
+  transform: translateY(-2px);
+}
+
+/* The ranked number brightens with its row. */
+.rank-row:hover .rank-number {
+  color: var(--coral);
+}
+
+/* Informational surfaces get a gentler brighten (no click implied). */
+.sample-card,
+.service-option {
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.sample-card:hover,
+.service-option:hover {
+  border-color: rgba(255, 107, 87, 0.3);
+  box-shadow:
+    var(--shadow),
+    0 0 34px rgba(255, 107, 87, 0.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .comic-card,
+  .rank-row,
+  .button {
+    transition: none;
+  }
+
+  .comic-card:hover,
+  .rank-row:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .front-stage {
+    align-items: center;
+    aspect-ratio: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    width: 100%;
+  }
+
+  .front-glow {
     display: none;
   }
 
-  .menu-only {
-    display: inline-flex;
+  .front-badge {
+    position: static;
+    transform: none;
+    width: auto;
+  }
+
+  .front-ring {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(2, 1fr);
+    position: static;
+    width: 100%;
+  }
+
+  .front-point {
+    border-radius: 14px;
+    flex-direction: row;
+    gap: 12px;
+    justify-content: flex-start;
+    min-height: 0;
+    padding: 14px;
+    position: static;
+    text-align: left;
+    transform: none;
+    width: 100%;
+  }
+
+  .front-point:hover,
+  .front-point:focus-visible {
+    transform: none;
+  }
+
+  .front-point-text {
+    align-items: flex-start;
+  }
+
+  .front-point .front-point-desc {
+    max-height: none;
+    opacity: 1;
+  }
+
+  .on-desktop {
+    display: none;
+  }
+
+  .on-mobile {
+    display: inline;
+  }
+}
+
+@media (max-width: 640px) {
+  .rank-row {
+    gap: 12px;
+    grid-template-columns: 28px minmax(0, 1fr) auto;
+    padding: 12px;
+  }
+
+  .rank-avatar,
+  .rank-cta {
+    display: none;
+  }
+}
+
+@media (max-width: 920px) {
+  .header-inner {
+    flex-wrap: wrap;
+    gap: 12px;
+    min-height: 0;
+  }
+
+  .site-header nav {
+    gap: 16px;
   }
 
   .trust-strip,
